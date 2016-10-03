@@ -1,0 +1,22 @@
+2016.10.3
+
+public class Solution {
+    public List<Integer> getRow(int rowIndex) {
+        List<Integer> list = new ArrayList<>(rowIndex + 1);
+        for (int i = 0; i <= rowIndex; i++){
+            list.add(-1);
+        }
+        list.set(rowIndex, 1);
+        if(rowIndex == 0) return list;
+
+        for(int i = 1; i <= rowIndex; i++){
+            list.set(rowIndex - i, 1);
+            for(int j = rowIndex + 1 - i; j < rowIndex; j++){
+                list.set(j, list.get(j) + list.get(j + 1));
+            }
+        }
+
+        return list;
+
+    }
+}
