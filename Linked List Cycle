@@ -1,0 +1,29 @@
+在每次访问链表单元的时候，对访问过的值赋最大整数值，这样的话就可以根据val的值进行判断是否有环。
+
+
+/**
+ * Created by Loki on 2016/10/9.
+ */
+
+
+/**
+ * Definition for singly-linked list.
+ * class ListNode {
+ *     int val;
+ *     ListNode next;
+ *     ListNode(int x) {
+ *         val = x;
+ *         next = null;
+ *     }
+ * }
+ */
+public class Solution {
+    public boolean hasCycle(ListNode head) {
+        if(head == null) return false;
+        while(head.next != null && head.val != Integer.MAX_VALUE){
+            head.val = Integer.MAX_VALUE;
+            head = head.next;
+        }
+        return (head.next != null) && (head.val == Integer.MAX_VALUE);
+    }
+}
