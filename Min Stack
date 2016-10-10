@@ -1,0 +1,70 @@
+/**
+ * Created by Loki on 2016/10/10.
+ */
+
+另开辟一个栈，栈首代表当前存放所有元素的栈中的最小值。
+在插入最小值栈、比较最小值的时候一定要为‘<=’ ，否则会出现空栈异常。因为如果当前要插入的值和最小值相等但却没有插入最小栈的话，当弹出该值时，
+最小栈中也会弹出该值，从而改变了剩余栈中的最小值，也有可能会导致空栈的出现。
+
+
+public class MinStack {
+
+    /** initialize your data structure here. */
+    private int min = 0;
+    private MyNode top = null;
+    private int size = 0;
+    private Stack<Integer> stack = new Stack<>();
+    public MinStack() {
+        
+    }
+    
+    public void push(int x) {
+        MyNode node = new MyNode(x);
+        node.next = top;
+        top = node;
+        min = min > x ? x : min;
+        size++;
+        if(stack.isEmpty() || stack.peek() >= x)
+            stack.push(x);
+    }
+    
+    public void pop() {
+        if(top != null){
+            if(top.val == (stack.peek()))
+                stack.pop();
+            top = top.next;
+            size--;
+        }
+    }
+    
+    public int top() {
+        if(top != null)
+            return top.val;
+        else
+            return Integer.MIN_VALUE;
+    }
+    
+    public int getMin() {
+        if(size != 0)
+            return stack.peek();
+        else
+            return Integer.MIN_VALUE;
+    }
+    class MyNode{
+        int val;
+        MyNode next;
+        MyNode(int x){
+            val = x;
+            next = null;
+        }
+    }
+}
+
+/**
+ * Your MinStack object will be instantiated and called as such:
+ * MinStack obj = new MinStack();
+ * obj.push(x);
+ * obj.pop();
+ * int param_3 = obj.top();
+ * int param_4 = obj.getMin();
+ */
