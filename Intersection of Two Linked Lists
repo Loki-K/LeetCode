@@ -1,0 +1,48 @@
+本例是按照leetcode给出的解题思路写出的，如果有人能够改进本代码，不胜感激，因为本人觉得写得有点臃肿。
+另外在网上看到另外一种解法，分别算出链表A和链表B的长度，减去较长的链表长度直至与较短的链表长度一致，然后同时向下遍历，如果有相同地址则表示有交叉点。
+人民群众力量大啊，是不是我太笨了。。。
+
+/**
+ * Definition for singly-linked list.
+ * public class ListNode {
+ *     int val;
+ *     ListNode next;。
+ *     ListNode(int x) {
+ *         val = x;
+ *         next = null;
+ *     }
+ * }
+ */
+public class Solution {
+    public ListNode getIntersectionNode(ListNode headA, ListNode headB) {
+        while(headA == null || headB == null) return null;
+        ListNode nodeA = headA;
+        ListNode nodeB = headB;
+        while(nodeA.next != null) {
+            nodeA = nodeA.next;
+            if(nodeB.next != null)
+                nodeB = nodeB.next;
+            else
+                nodeB = headA;
+        }
+        
+        nodeA = headB;
+        if(nodeB.next != null)
+            nodeB = nodeB.next;
+        else
+            nodeB = headA;
+        
+        while(nodeA.next != null && nodeA != nodeB) {
+            nodeA = nodeA.next;
+            if(nodeB.next != null)
+                nodeB = nodeB.next;
+            else
+                nodeB = headA;
+            
+        }
+        
+        if(nodeA == nodeB) return nodeA;
+        else return null;
+        
+    }
+}
