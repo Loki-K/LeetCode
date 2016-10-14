@@ -1,0 +1,27 @@
+/**
+ * Created by Loki on 2016/10/14.
+ */
+
+这个题目啊，太纠结了做的。首先犯下的错误就是没有搞清楚题意，以为一个字符串只有一个点；其次，根本没有想到会有' .01 '这种情况好吗。。。
+
+然后就是自己编程也有问题。第一，在比较数字字符串的时候，我的选择是把他们看成字符一个个比较，但是明显得用Integer.parseInt这种函数要好很多啊。
+在刚开始转出成数字的时候我想的太麻烦了，先找到点的索引，再知道最高次幂。。。。明明用‘a = a * 10 + b’就可以解决的问题，我在想我是不是猪啊，天啦噜。
+
+再有就是遇到长短不一的时候，无论是字符串啊，数组啊，链表啊还是什么的，有两种方法可以先考虑，那就是截长或者补短。
+
+
+public int compareVersion(String version1, String version2) {
+        String[] v1 = version1.split("\\.");
+        String[] v2 = version2.split("\\.");
+        int length = v1.length > v2.length ? v1.length : v2.length;
+        for(int i = 0; i < length; i++) {
+            int a = 0;
+            if(i <= v1.length - 1) a = Integer.parseInt(v1[i]);
+            int b = 0;
+            if(i <= v2.length - 1) b = Integer.parseInt(v2[i]);
+            if(a > b) return 1;
+            if(a < b) return -1;
+        }
+        
+        return 0;
+    }
