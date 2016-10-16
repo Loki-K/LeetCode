@@ -11,9 +11,8 @@ For example:
     28 -> AB 
 
 
-/**
- * Created by Loki on 2016/10/6.
- */
+Created by Loki on 2016/10/16.
+
 
 public class Solution {
     public String convertToTitle(int n) {
