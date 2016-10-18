@@ -38,3 +38,20 @@ public class Solution {
         return result;
     }
 }
+
+网上另外一种解法：
+本质上就是将一个10进制数转换为一个26进制的数
+注意：由于下标从1开始而不是从0开始，因此要减一操作。（该减一操作将其变为从0开始的26进制数）
+
+class Solution {
+public:
+    string convertToTitle(int n) {
+        string ret = "";
+        while(n)
+        {
+            ret = (char)((n-1)%26+'A') + ret;
+            n = (n-1)/26;
+        }
+        return ret;
+    }
+}
