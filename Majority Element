@@ -1,0 +1,37 @@
+Created by Loki on 2016/10/18
+
+public class Solution {
+    public int majorityElement(int[] nums) {
+        Arrays.sort(nums);
+        return(nums[(nums.length + 1) / 2 - 1]);
+    }
+}
+
+上面是自己做的，用了两行代码完成任务。
+但是，却不够快。下面是别人的一种解法，大致思路是，给当前的元素计数，如果下个元素与之相同，则计数加一，否则计数减一，
+如果为0，则换另外一个元素。作者说是成对删除，但也可以说是把当前元素看成是目标元素，只是如果计数为0则表示元素选错，改变当前元素。
+
+以下是程序：
+class Solution {
+public:
+    int majorityElement(vector<int>& nums) {
+        int candidate = 0;
+        int count = 0;
+        for(int i = 0; i < nums.size(); i ++)
+        {
+            if(count == 0)
+            {
+                candidate = nums[i];
+                count = 1;
+            }
+            else
+            {
+                if(nums[i] == candidate)
+                    count ++;
+                else
+                    count --;
+            }
+        }
+        return candidate;
+    }
+}
