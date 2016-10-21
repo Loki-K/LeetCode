@@ -1,0 +1,76 @@
+额，这道题做的真的是，到最后也没做出来，反倒陷进了进制转换、类型转换、类型范围里面。基础还是太差啊，，，
+在这里面学到了：
+1、整数可以直接用‘ & ’按位与，
+2、>>> 代表无符号右移，>> 代表有符号右移。
+
+public class Solution {
+    // you need treat n as an unsigned value
+    public int reverseBits(int n) {
+        int result = 0;
+        for(int i = 0; i <  32; i++) {
+            result <<= 1;
+            result += n & 1;
+            n >>>= 1;
+        }
+        return result;
+    }
+}
+
+看了discuss之后做出来的，其实也不算做出来，下面是原答案：
+https://discuss.leetcode.com/topic/9764/java-solution-and-optimization
+
+The Java solution is straightforward, just bitwise operation:
+
+public int reverseBits(int n) {
+    int result = 0;
+    for (int i = 0; i < 32; i++) {
+        result += n & 1;
+        n >>>= 1;   // CATCH: must do unsigned shift
+        if (i < 31) // CATCH: for last digit, don't shift!
+            result <<= 1;
+    }
+    return result;
+}
+How to optimize if this function is called multiple times? 
+We can divide an int into 4 bytes, and reverse each byte then combine into an int.
+For each byte, we can use cache to improve performance.
+
+// cache
+private final Map<Byte, Integer> cache = new HashMap<Byte, Integer>();
+public int reverseBits(int n) {
+    byte[] bytes = new byte[4];
+    for (int i = 0; i < 4; i++) // convert int into 4 bytes
+        bytes[i] = (byte)((n >>> 8*i) & 0xFF);
+    int result = 0;
+    for (int i = 0; i < 4; i++) {
+        result += reverseByte(bytes[i]); // reverse per byte
+        if (i < 3)
+            result <<= 8;
+    }
+    return result;
+}
+
+private int reverseByte(byte b) {
+    Integer value = cache.get(b); // first look up from cache
+    if (value != null)
+        return value;
+    value = 0;
+    // reverse by bit
+    for (int i = 0; i < 8; i++) {
+        value += ((b >>> i) & 1);
+        if (i < 7)
+            value <<= 1;
+    }
+    cache.put(b, value);
+    return value;
+}
+
+然后下面有人讨论说：
+'''
+In your first solution, the if statement to check if i < 31 is not necessary.
+just put result <<= 1 in the very beginning of the for loop.
+'''
+所以，以后写程序的时候也要注意到是在循环刚开始的时候操作还是在循环内容完了以后操作。
+
+
+
