@@ -1,0 +1,23 @@
+Created by Loki on 2016/10/24.
+
+这个问题也是参考leetcode中的discuss才做出的，因为没有什么思路啊，真是笨的要死了。
+下面的程序思路是这样的。假设在某一长度下已经有最大值了，那么如何算出再加上一个元素下的最大值？两个方案，一个是当前值加上
+上上一个长度下的最大值，这样就避免了相邻；另一个是上一长度下的最大值。
+
+
+
+public class Solution {
+    public int rob(int[] nums) {
+        int current = 0;
+        int previous = 0;
+        int temp = 0;
+        
+        for(int i = 0; i < nums.length; i++) {
+            temp = current;
+            current = current > (previous + nums[i]) ? current : (previous + nums[i]);
+            previous = temp;
+        }
+        
+        return current;
+    }
+}
